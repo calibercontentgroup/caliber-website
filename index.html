@@ -94,14 +94,50 @@
     }
     nav.scrolled { padding: 14px 60px; }
     .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
       text-decoration: none;
-      letter-spacing: 0.02em;
+      color: var(--white);
+      flex-shrink: 0;
     }
-    .nav-logo span { color: var(--gold); }
+    .nav-logo-icon {
+      width: 34px;
+      height: 34px;
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(201,168,76,0.25);
+    }
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .nav-logo-primary {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .nav-logo-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
     .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a {
       color: var(--gray);
@@ -905,12 +941,43 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 700;
-      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
     }
-    .footer-logo span { color: var(--gold); }
-    .footer-tagline { font-size: 0.82rem; color: var(--gray2); margin-top: 6px; }
+    .footer-logo-icon {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--gold);
+      box-shadow: 0 0 16px rgba(201,168,76,0.2);
+    }
+    .footer-logo-text .footer-logo-primary {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .footer-logo-text .footer-logo-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .footer-tagline { font-size: 0.82rem; color: var(--gray2); margin-top: 8px; }
     .footer-links { display: flex; gap: 32px; }
     .footer-links a {
       font-size: 0.82rem; color: var(--gray2); text-decoration: none;
@@ -1033,7 +1100,13 @@
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">Caliber<span>.</span></a>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">C</div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-primary">Caliber</span>
+      <span class="nav-logo-sub">Content Group</span>
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#what-you-get">Content</a></li>
     <li><a href="#web-design">Web Design</a></li>
@@ -1655,7 +1728,13 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-logo">Caliber<span> Content Group</span></div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">C</div>
+        <div class="footer-logo-text">
+          <div class="footer-logo-primary">Caliber</div>
+          <div class="footer-logo-sub">Content Group</div>
+        </div>
+      </div>
       <div class="footer-tagline">Security Content Marketing &amp; Web Design. Delivered with Precision.</div>
     </div>
     <div class="footer-links">
