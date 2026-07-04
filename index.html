@@ -1750,28 +1750,28 @@
         </div>
       </div>
       <div class="reveal reveal-delay-2">
-        <div class="contact-form">
+        <form class="contact-form" id="ccg-contact-form" novalidate>
           <div class="form-row">
             <div class="form-group">
-              <label>First Name</label>
-              <input type="text" placeholder="Anthony" />
+              <label for="ccg-first">First Name</label>
+              <input id="ccg-first" type="text" placeholder="Anthony" required />
             </div>
             <div class="form-group">
-              <label>Last Name</label>
-              <input type="text" placeholder="Olivares" />
+              <label for="ccg-last">Last Name</label>
+              <input id="ccg-last" type="text" placeholder="Olivares" />
             </div>
           </div>
           <div class="form-group">
-            <label>Business Name</label>
-            <input type="text" placeholder="Your Business Name" />
+            <label for="ccg-biz">Business Name</label>
+            <input id="ccg-biz" type="text" placeholder="Your Business Name" />
           </div>
           <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" placeholder="you@yourbusiness.com" />
+            <label for="ccg-email">Email Address</label>
+            <input id="ccg-email" type="email" placeholder="you@yourbusiness.com" required />
           </div>
           <div class="form-group">
-            <label>Package You're Interested In</label>
-            <select>
+            <label for="ccg-package">Package You're Interested In</label>
+            <select id="ccg-package">
               <option value="">Select a package...</option>
               <option>Starter Package — $297/mo</option>
               <option>Growth Package — $497/mo</option>
@@ -1782,19 +1782,20 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Preferred Language</label>
-            <select>
+            <label for="ccg-lang">Preferred Language</label>
+            <select id="ccg-lang">
               <option>English</option>
               <option>Spanish / Español</option>
               <option>Bilingual (English + Spanish)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Tell Us About Your Business</label>
-            <textarea placeholder="What kind of business do you run? What's your biggest challenge with marketing right now?"></textarea>
+            <label for="ccg-message">Tell Us About Your Business</label>
+            <textarea id="ccg-message" placeholder="What kind of business do you run? What's your biggest challenge with marketing right now?"></textarea>
           </div>
-          <button class="form-submit" type="submit">Send Message →</button>
-        </div>
+          <button class="form-submit" type="submit" id="ccg-submit">Send Message →</button>
+          <div id="ccg-form-msg" style="display:none;margin-top:16px;padding:14px 18px;border-radius:8px;font-size:14px;font-weight:600;"></div>
+        </form>
       </div>
     </div>
   </div>
@@ -1896,6 +1897,73 @@
       }
     });
   });
+
+  // CCG Contact Form — Make.com webhook
+  const ccgForm = document.getElementById('ccg-contact-form');
+  if (ccgForm) {
+    ccgForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('ccg-submit');
+      const msg = document.getElementById('ccg-form-msg');
+      const firstName = document.getElementById('ccg-first').value.trim();
+      const lastName  = document.getElementById('ccg-last').value.trim();
+      const email     = document.getElementById('ccg-email').value.trim();
+      const biz       = document.getElementById('ccg-biz').value.trim();
+      const pkg       = document.getElementById('ccg-package').value;
+      const lang      = document.getElementById('ccg-lang').value;
+      const message   = document.getElementById('ccg-message').value.trim();
+
+      if (!firstName || !email) {
+        msg.style.display = 'block';
+        msg.style.background = '#ff4d4d22';
+        msg.style.color = '#ff6b6b';
+        msg.style.border = '1px solid #ff4d4d44';
+        msg.textContent = 'Please fill in your name and email address.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      msg.style.display = 'none';
+
+      const payload = {
+        name: lastName ? firstName + ' ' + lastName : firstName,
+        email: email,
+        phone: '',
+        business: biz,
+        package: pkg,
+        language: lang,
+        message: message
+      };
+
+      try {
+        const res = await fetch('https://hook.us2.make.com/njgbstzlm9fkbvd8yu1qm3mw2d5s4inf', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          msg.style.display = 'block';
+          msg.style.background = '#00c85322';
+          msg.style.color = '#00c853';
+          msg.style.border = '1px solid #00c85344';
+          msg.textContent = "Got it. We'll be in touch within one business day.";
+          ccgForm.reset();
+          btn.textContent = 'Message Sent';
+        } else {
+          throw new Error('Server error');
+        }
+      } catch(err) {
+        msg.style.display = 'block';
+        msg.style.background = '#ff4d4d22';
+        msg.style.color = '#ff6b6b';
+        msg.style.border = '1px solid #ff4d4d44';
+        msg.textContent = "Something went wrong. Email us directly at CaliberContentGroup@gmail.com.";
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+      }
+    });
+  }
 </script>
 
 </body>
